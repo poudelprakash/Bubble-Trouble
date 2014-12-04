@@ -4,25 +4,36 @@
 	background-color: black;
 	position: relative;
 }
-#bubble-1{
-	width: 40px;
-	height: 40px;
+#bubble-red{
+	width: 30px;
+	height: 30px;
 	background-color: red;
-	border-radius: 20px;
-	-webkit-border-radius:20px;
-	-moz-border-radius:20px;
+	border-radius: 15px;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
 	position: absolute;
 	/*display: none;*/
-	top: 360px;
+	/*top: 360px;*/
 }
-#bubble-small{
+#bubble-green{
 	width: 20px;
 	height: 20px;
-	background-color: yellow;
+	background-color: green;
 	border-radius: 10px;
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
 	position: absolute;
 	/*display: none;*/
-	top: 360px;
+	/*top: 360px;*/
+}
+#bubble-yellow{
+	width: 10px;
+	height: 10px;
+	background-color: yellow;
+	border-radius: 5px;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	position: absolute;
+	/*display: none;*/
+	/*top: 360px;*/
 }

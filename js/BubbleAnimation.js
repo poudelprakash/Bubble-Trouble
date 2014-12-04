@@ -1,3 +1,4 @@
+/*-------------------------------------Animation Class---------------------------------------------*/
 function BubbleAnimation(){
 	this.bubble;
 	this.properties;
@@ -9,7 +10,7 @@ function BubbleAnimation(){
 	this.velocityX=4;//x velocity to determine width of bounce
 	this.velocityY=0;
 	this.gravity=0.5;//gravity to pull bouncing ball down
-	that=this;
+	var that=this;
 	this.animate=function (element,properties,frequency){
 		that.bubble=element;
 		that.properties=properties;
@@ -41,10 +42,54 @@ function BubbleAnimation(){
 	    that.bubble.style.left=that.positionX+"px";
 		}
 }
-var apple=new BubbleAnimation();
-apple.animate(document.getElementById("bubble-1"),{velocity:-12},30);
+/*-------------------------------------Bubble Class---------------------------------------------*/
+function Bubble(){
+	gameWindow=document.getElementById("game-window");//making gameWindow accessible from anywhere
+	this.element;
+	this.properties;
+	var that=this;
+	this.createBubble=function(properties){
+		that.properties=properties;
+		that.element=document.createElement("div");
+		that.element.id=that.properties.bubbleId;
+		that.element.style.top = 360+"px";
+		that.element.style.left=0+"px";
+		gameWindow.appendChild(that.element);
+		that.animateBubble();
+	}
+	this.animateBubble=function (){
+		var bounce=new BubbleAnimation();
+		if(that.properties.bubbleId=="bubble-red"){
+			bounce.animate(that.element,{velocity:-12},30);
+		}else if(that.properties.bubbleId=="bubble-green"){
+			bounce.animate(that.element,{velocity:-10},34);
+		}else if(that.properties.bubbleId=="bubble-yellow"){
+			bounce.animate(that.element,{velocity:-6},38);
+		}
+	}
+	this.splitBubble=function (){
+		if(that.properties.bubbleId=="bubble-green"){
+			gameWindow.removeChild(document.getElementById("bubble-green"));
+			that.createBubble({bubbleId:"bubble-yellow"});
+			that.createBubble({bubbleId:"bubble-yellow"});
+		}else if(that.properties.bubbleId=="bubble-red"){
+			gameWindow.removeChild(document.getElementById("bubble-red"));
+			that.createBubble({bubbleId:"bubble-green"});
+			that.createBubble({bubbleId:"bubble-green"});
+		}else if(that.properties.bubbleId=="bubble-yellow"){
+			gameWindow.removeChild(document.getElementById("bubble-yellow"));
+		}
+		
+	}
+}
 
-// var b=new BubbleAnimation();
-// b.animate(document.getElementById("bubble-small"),{velocity:-6},38);
-
-
+/*--------------------------------------level-1----------------------------------------*/
+// var green=new Bubble();
+// green.createBubble({bubbleId:"bubble-green"});
+// window.addEventListener("mousedown", green.splitBubble, false);
+/*--------------------------------------level-2----------------------------------------*/
+var red=new Bubble();
+red.createBubble({bubbleId:"bubble-red"});
+window.addEventListener("mousedown", red.splitBubble, false);
+// var yellow=new Bubble();
+// yellow.createBubble({bubbleId:"bubble-yellow"});
