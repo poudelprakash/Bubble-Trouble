@@ -1,5 +1,6 @@
 /*-------------------------------------Animation Class---------------------------------------------*/
-function BubbleAnimation(){
+function BubbleAnimation(bubble){
+	this.oBubble=bubble;//old bubble from Bubble class
 	this.bubble;
 	this.properties;
 	this.duration;
@@ -8,9 +9,10 @@ function BubbleAnimation(){
 	this.bubbleVelocity;//bubble specific velocity to fix how high it will bounce
 	this.positionX;
 	this.positionY;
-	this.velocityX;//x velocity to determine width of bounce
+	this.velocityX;//x velocity to determine width and direction of bounce
 	this.velocityY=-6;//y velocity that makes ball bounce some distance on creation
 	this.gravity=0.5;//gravity to pull bouncing ball down
+	this.intervalId;
 	var that=this;
 	this.animate=function (element,properties,frequency){
 		that.bubble=element;
@@ -21,8 +23,8 @@ function BubbleAnimation(){
 		that.velocityX=that.properties.velocityX;//altering direction for splits
 		// that.velocityY=that.properties.velocityY;//get velocity Y for higher jump in splits
 		that.frequency=frequency;
-		that.topPos = 400-that.bubble.clientHeight;//generating top position by substracting diameter
-		that.rightEnd = 780-that.bubble.clientWidth;//generating Rightmost position by substracting diameter
+		that.topPos = 400-that.oBubble.bubbleWidth;//generating top position by substracting diameter
+		that.rightEnd = 780-that.oBubble.bubbleWidth;//generating Rightmost position by substracting diameter
 		that.intervalId=setInterval(that.update, that.frequency);
 	}
 	this.update=function(){
