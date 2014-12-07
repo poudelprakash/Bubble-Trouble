@@ -3,7 +3,7 @@
 	height: 400px;
 	background:url(../images/bg1.jpg);
 	position: relative;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 #bubble-red{
 	background-color: red;
@@ -27,4 +27,8 @@
 	background-color:red;
 	left:300px;
 	top:0px;
+}
+#player{
+	background-color: white;
+	position: absolute;
 }
