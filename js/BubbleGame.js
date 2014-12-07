@@ -9,15 +9,30 @@
 // yellow.createBubble({bubbleId:"bubble-yellow"});
 function BubbleGame(){
 	this.gameWindow=document.getElementById("game-window");
-	this.red;
+	this.player;
+	this.initialBall;
+	this.bullet;
 	var that=this;
 	this.init=function(){
-		that.red=new Bubble(that);
-		that.red.createBubble({bubbleId:"bubble-red",top:"60px",left:"60px",width:"30px"});
-		setInterval(that.collisionCheck,10);
-		var bullet=new Bullet(that);
-		bullet.fireBullet();
-		window.addEventListener("mousedown", bullet.fireBullet, false);
+		that.player=new Player(that);//instance of player
+		that.player.createPlayer();//creates new player at the start
+		that.bullet=new Bullet(that);//instance of bullet
+		that.initialBall=new Bubble(that);//instance of bubble
+		that.initialBall.createBubble({bubbleId:"bubble-red",top:"60px",left:"60px",width:"30px"});
+		// setInterval(that.collisionCheck,100);
+		document.addEventListener('keydown', that.onkeydown, false);
+		// document.addEventListener("mousedown", that.bullet.fireBullet, false);
+	}
+	that.onkeydown=function(event){
+		if(event.keyCode == 32){//for space key
+			that.bullet.fireBullet();
+		}
+		if(event.keyCode == 37){//for left Arrow
+			that.player.moveLeft();
+		}
+		if(event.keyCode == 39){//for Right Arrow
+			that.player.moveRight();
+		}
 	}
 	this.collisionCheck=function (argument){
 		for (var i = 0; i < that.red.bubbles.length; i++) {
