@@ -6,14 +6,16 @@ function Bubble(game){
 	this.bubbleAnimations=[];
 	this.element;
 	this.properties;
+	this.bubbleClass;
 	this.topPos;
 	this.bubbleWidth;
-	this.positionY;
+	this.positionX;
 	this.bounce;//animation class for bubble
 	this.velocityX=4;//x velocity to determine width of bounce
 	var that=this;
 	this.createBubble=function(properties){
 		that.properties=properties;
+		that.bubbleClass=that.properties.bubbleClass;
 		that.topPos=parseInt(that.properties.top);
 		that.bubbleWidth=parseInt(that.properties.width);
 		if(that.properties.velocityX==-1){
@@ -21,14 +23,14 @@ function Bubble(game){
 		}else{
 			that.velocityX=4;
 		}
-		that.positionY=parseInt(that.properties.left);
+		that.positionX=parseInt(that.properties.left);
 		that.element=document.createElement("div");
-		that.element.id=that.properties.bubbleId;
+		that.element.className=that.bubbleClass;
 		that.element.style.width=that.bubbleWidth+"px";
 		that.element.style.height=that.bubbleWidth+"px";
 		that.element.style.borderRadius=(that.bubbleWidth/2)+"px";
 		that.element.style.top=that.topPos+"px";
-		that.element.style.left=that.positionY+"px";
+		that.element.style.left=that.positionX+"px";
 		that.gameWindow.appendChild(that.element);//creates bubble
 		that.bubbles.push(that.element);
 		that.animateBubble();//start animating as soon as ball is created
@@ -36,28 +38,27 @@ function Bubble(game){
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
 		that.bubbleAnimations.push(that.bounce);
-		console.log(that.bubbleAnimations);
-		// bounce.animate(that.bubbles[0],{velocity:-12,top:that.topPos,left:that.positionY,velocityX:that.velocityX},30);
-		if(that.properties.bubbleId=="bubble-red"){
-			that.bounce.animate(that.element,{velocity:-12,top:that.topPos,left:that.positionY,velocityX:that.velocityX},30);
-		}else if(that.properties.bubbleId=="bubble-green"){
-			that.bounce.animate(that.element,{velocity:-10,top:that.topPos,left:that.positionY,velocityX:that.velocityX},34);
-		}else if(that.properties.bubbleId=="bubble-yellow"){
-			that.bounce.animate(that.element,{velocity:-6,top:that.topPos,left:that.positionY,velocityX:that.velocityX},38);
+		if(that.bubbleWidth==30){
+			that.bounce.animate(that.element,{velocity:-12,top:that.topPos,left:that.positionX,velocityX:that.velocityX},30);
+		}else if(that.bubbleWidth==20){
+			that.bounce.animate(that.element,{velocity:-10,top:that.topPos,left:that.positionX,velocityX:that.velocityX},34);
+		}else if(that.bubbleWidth==10){
+			that.bounce.animate(that.element,{velocity:-6,top:that.topPos,left:that.positionX,velocityX:that.velocityX},38);
 		}
 	}
-	this.splitBubble=function (elementId){
-		if(that.properties.bubbleId=="bubble-red"){
+	this.splitBubble=function (index){
+		if(that.bubbles[index].clientHeight==30){
 			that.destroyBubble(that.bubbles[0]);
-			console.log(that.bubbleAnimations[0].positionY);
-			that.createBubble({bubbleId:"bubble-green",top:that.bubbleAnimations[0].positionY,left:that.bubbleAnimations[0].positionX,width:"20px",velocityX:-1});
-			that.createBubble({bubbleId:"bubble-green",top:that.bubbleAnimations[0].positionY,left:that.bubbleAnimations[0].positionX,width:"20px"});
-		}else if(that.properties.bubbleId=="bubble-yellow"){
-			that.destroyBubble(that.bubbles[3]);
-			that.destroyBubble(that.bubbles[4]);
-
-		}
-		
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"20px",velocityX:-1});
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"20px",velocityX:1});
+		}else if(that.bubbles[index].clientHeight==20){
+			that.destroyBubble(that.bubbles[index]);
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"10px",velocityX:-1});
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"10px",velocityX:1});
+			
+		}else if(that.bubbles[index].clientHeight==20){
+			that.destroyBubble(that.bubbles[index]);
+		}		
 	}
 	this.destroyBubble=function(element){
 		//clearing the resource

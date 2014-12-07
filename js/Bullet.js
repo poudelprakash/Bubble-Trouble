@@ -1,7 +1,8 @@
 function Bullet(game){
 	this.gameWindow=game.gameWindow;
 	this.bulletPosX=304;
-	this.bulletPosY=400-game.player.playerHeight;
+	this.bulletHeight=400-game.player.playerHeight;
+	this.bulletPosY=this.bulletHeight;
 	this.bulletUpdateInterval;
 	this.bullet;
 	this.fired="false";
@@ -20,6 +21,8 @@ function Bullet(game){
 		}	
 	}
 	this.updateBullet=function(){
+		
+			// console.log(that.bulletPosY);
 		if(that.bulletPosY!=0){
 			that.fired="true";
 			that.bulletPosY-=1;
@@ -31,14 +34,11 @@ function Bullet(game){
 	this.destroyBullet=function(){
 		//clearing bullet resources
 		that.fired="false";
-		that.bulletPosY=400;
+		that.bulletPosY=that.bulletHeight;
 		clearInterval(that.bulletUpdateInterval);
 		setTimeout(that.removeBullet, 200);//pauses bullet for small instance after bullet reaches top
 	}
 	this.removeBullet=function(){
 		that.gameWindow.removeChild(that.bullet);
-	}
-	this.detectCollision=function(argument){
-		/* body... */
 	}
 }

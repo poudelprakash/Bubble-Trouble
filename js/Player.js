@@ -1,7 +1,7 @@
 function Player(game){
 	this.gameWindow=game.gameWindow;
 	this.player;
-	this.playerPosX=350;
+	this.playerPosX=330;
 	this.playerHeight=50;
 	this.playerWidth=20;
 	that=this;
@@ -14,17 +14,16 @@ function Player(game){
 		that.player.style.left=that.playerPosX+"px";
 		that.gameWindow.appendChild(that.player);
 	}
+	this.moveRight=function(){
+		if(that.playerPosX<760){
+			that.playerPosX+=10;
+			that.player.style.left=that.playerPosX+"px";
+		}
+	}
 	this.moveLeft=function(){
 		if(that.playerPosX>0){
 			that.playerPosX-=10;
 			that.player.style.left=that.playerPosX+"px";
 		}
-	this.moveRight=function(){
-		if(that.playerPosX<760){
-			that.playerPosX+=20;
-			that.player.style.left=that.playerPosX+"px";
-		}
-	}
-
 	}
 }
