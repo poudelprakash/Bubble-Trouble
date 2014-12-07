@@ -10,18 +10,18 @@
 function BubbleGame(){
 	this.gameWindow=document.getElementById("game-window");
 	this.player;
-	this.initialBall;
+	this.initialBubble;
 	this.bullet;
 	var that=this;
 	this.init=function(){
 		that.player=new Player(that);//instance of player
 		that.player.createPlayer();//creates new player at the start
 		that.bullet=new Bullet(that);//instance of bullet
-		that.initialBall=new Bubble(that);//instance of bubble
-		that.initialBall.createBubble({bubbleId:"bubble-red",top:"60px",left:"60px",width:"30px"});
+		that.initialBubble=new Bubble(that);//instance of bubble
+		that.initialBubble.createBubble({bubbleId:"bubble-red",top:"60px",left:"60px",width:"30px"});
 		// setInterval(that.collisionCheck,100);
 		document.addEventListener('keydown', that.onkeydown, false);
-		// document.addEventListener("mousedown", that.bullet.fireBullet, false);
+		document.addEventListener("mousedown", that.initialBubble.splitBubble, false);
 	}
 	that.onkeydown=function(event){
 		if(event.keyCode == 32){//for space key
@@ -33,16 +33,13 @@ function BubbleGame(){
 		if(event.keyCode == 39){//for Right Arrow
 			that.player.moveRight();
 		}
+		if(event.keyCode == 38){//for left Arrow
+			that.collisionCheck();
+		}
 	}
 	this.collisionCheck=function (argument){
-		for (var i = 0; i < that.red.bubbles.length; i++) {
-			// console.log(that.red.bubbles[i]);
-			if(that.red.bubbles[i].style.left=="300px"){
-				if(that.red.bubbles[i].style.top=="20px"){
-					that.red.splitBubble();
-				}
-				// console.log(that.red.bubbles[i].style.left);	
-			}
+		for (var i = 0; i < that.initialBubble.bubbles.length; i++) {
+			console.log('he');
 		};
 		
 	}

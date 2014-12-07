@@ -3,6 +3,7 @@ function Bubble(game){
 	this.game=game;
 	this.gameWindow=game.gameWindow;
 	this.bubbles=[];
+	this.bubbleAnimations=[];
 	this.element;
 	this.properties;
 	this.topPos;
@@ -34,6 +35,8 @@ function Bubble(game){
 	}
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
+		that.bubbleAnimations.push(that.bounce);
+		console.log(that.bubbleAnimations);
 		// bounce.animate(that.bubbles[0],{velocity:-12,top:that.topPos,left:that.positionY,velocityX:that.velocityX},30);
 		if(that.properties.bubbleId=="bubble-red"){
 			that.bounce.animate(that.element,{velocity:-12,top:that.topPos,left:that.positionY,velocityX:that.velocityX},30);
@@ -44,16 +47,15 @@ function Bubble(game){
 		}
 	}
 	this.splitBubble=function (elementId){
-		if(that.properties.bubbleId=="bubble-green"){
-			that.destroyBubble(that.bubbles[2]);
-			that.createBubble({bubbleId:"bubble-yellow",top:parseInt(that.element.style.top),left:parseInt(that.element.style.left),width:"10px",velocityX:-1});
-			that.createBubble({bubbleId:"bubble-yellow",top:parseInt(that.element.style.top),left:parseInt(that.element.style.left),width:"10px"});
-		}else if(that.properties.bubbleId=="bubble-red"){
+		if(that.properties.bubbleId=="bubble-red"){
 			that.destroyBubble(that.bubbles[0]);
-			that.createBubble({bubbleId:"bubble-green",top:parseInt(that.element.style.top),left:parseInt(that.element.style.left),width:"20px",velocityX:-1});
-			that.createBubble({bubbleId:"bubble-green",top:parseInt(that.element.style.top),left:parseInt(that.element.style.left),width:"20px"});
+			console.log(that.bubbleAnimations[0].positionY);
+			that.createBubble({bubbleId:"bubble-green",top:that.bubbleAnimations[0].positionY,left:that.bubbleAnimations[0].positionX,width:"20px",velocityX:-1});
+			that.createBubble({bubbleId:"bubble-green",top:that.bubbleAnimations[0].positionY,left:that.bubbleAnimations[0].positionX,width:"20px"});
 		}else if(that.properties.bubbleId=="bubble-yellow"){
 			that.destroyBubble(that.bubbles[3]);
+			that.destroyBubble(that.bubbles[4]);
+
 		}
 		
 	}
