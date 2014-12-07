@@ -1,12 +1,4 @@
 'use strict';
-/*--------------------------------------level-1----------------------------------------*/
-// var green=new Bubble();
-// green.createBubble({bubbleId:"bubble-green"});
-// window.addEventListener("mousedown", green.splitBubble, false);
-/*--------------------------------------level-2----------------------------------------*/
-
-// var yellow=new Bubble();
-// yellow.createBubble({bubbleId:"bubble-yellow"});
 function BubbleGame(){
 	this.gameWindow=document.getElementById("game-window");
 	this.player;
@@ -18,10 +10,9 @@ function BubbleGame(){
 		that.player.createPlayer();//creates new player at the start
 		that.bullet=new Bullet(that);//instance of bullet
 		that.initialBubble=new Bubble(that);//instance of bubble
-		that.initialBubble.createBubble({bubbleId:"bubble-red",top:"60px",left:"60px",width:"30px"});
-		// setInterval(that.collisionCheck,100);
+		that.initialBubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"30px"});
+		setInterval(that.collisionCheck,40);
 		document.addEventListener('keydown', that.onkeydown, false);
-		document.addEventListener("mousedown", that.initialBubble.splitBubble, false);
 	}
 	that.onkeydown=function(event){
 		if(event.keyCode == 32){//for space key
@@ -33,13 +24,20 @@ function BubbleGame(){
 		if(event.keyCode == 39){//for Right Arrow
 			that.player.moveRight();
 		}
-		if(event.keyCode == 38){//for left Arrow
-			that.collisionCheck();
-		}
 	}
 	this.collisionCheck=function (argument){
 		for (var i = 0; i < that.initialBubble.bubbles.length; i++) {
-			console.log('he');
+			//collision with bullet
+			// && that.initialBubble.bubbleAnimations[i].positionY>that.bullet.bulletPosY
+			if(that.bullet.fired=="true"){
+				if(that.initialBubble.bubbleAnimations[i].positionX==that.bullet.bulletPosX){
+					that.initialBubble.splitBubble(i);
+				}	
+			}
+			//collision with player
+			if(that.initialBubble.bubbleAnimations[i].positionX==that.player.posX){
+				console.log('player maryo');
+			}
 		};
 		
 	}
