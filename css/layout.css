@@ -5,17 +5,17 @@
 	position: relative;
 	overflow: hidden;
 }
-#bubble-red{
+.bubble-red{
 	background-color: red;
 	position: absolute;
 }
-#bubble-green{
+.bubble-green{
 	background-color: green;
 	position: absolute;
 	/*display: none;*/
 	/*top: 360px;*/
 }
-#bubble-yellow{
+.bubble-yellow{
 	background-color: yellow;
 	position: absolute;
 	/*border-radius: 5px;
@@ -25,10 +25,8 @@
 .bullet{
 	position: absolute;
 	background-color:red;
-	left:300px;
-	top:0px;
 }
 #player{
-	background-color: white;
+	background-color: black;
 	position: absolute;
 }
