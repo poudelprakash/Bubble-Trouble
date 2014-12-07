@@ -1,13 +1,14 @@
 function Bullet(game){
 	this.gameWindow=game.gameWindow;
-	this.bulletPosX=300;
-	this.bulletPosY=400;
+	this.bulletPosX=304;
+	this.bulletPosY=400-game.player.playerHeight;
 	this.bulletUpdateInterval;
 	this.bullet;
 	this.fired="false";
 	var that=this;
-	this.fireBullet=function(){
+	this.fireBullet=function(x){
 		if(that.fired=="false"){
+			that.bulletPosX=game.player.playerPosX+game.player.playerWidth/2;//this fixes where the bullet should emerge from
 			that.bullet=document.createElement("div");
 			that.bullet.className="bullet";
 			that.bullet.style.height=400+"px";
@@ -19,7 +20,6 @@ function Bullet(game){
 		}	
 	}
 	this.updateBullet=function(){
-		console.log(that.bulletPosY);
 		if(that.bulletPosY!=0){
 			that.fired="true";
 			that.bulletPosY-=1;
