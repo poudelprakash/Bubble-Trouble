@@ -4,6 +4,7 @@ function BubbleGame(){
 	this.player;
 	this.initialBubble;
 	this.bullet;
+	this.collisionInterval
 	var that=this;
 	this.init=function(){
 		that.player=new Player(that);//instance of player
@@ -11,7 +12,7 @@ function BubbleGame(){
 		that.bullet=new Bullet(that);//instance of bullet
 		that.initialBubble=new Bubble(that);//instance of bubble
 		that.initialBubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"30px"});
-		setInterval(that.collisionCheck,120);
+		that.collisionInterval=setInterval(that.collisionCheck,120);
 		document.addEventListener('keydown', that.onkeydown, false);
 	}
 	that.onkeydown=function(event){
@@ -65,7 +66,10 @@ function BubbleGame(){
 		for (var i = 0; i < that.initialBubble.bubbles.length; i++) {
 			if(that.initialBubble.bubbleAnimations[i].positionX>(that.player.playerPosX-parseInt(that.initialBubble.bubbles[i].style.width)) && that.initialBubble.bubbleAnimations[i].positionX<(that.player.playerPosX+that.player.playerWidth)){
 				if(that.initialBubble.bubbleAnimations[i].positionY>(400-(that.player.playerHeight+parseInt(that.initialBubble.bubbles[i].style.height)))){
-					clearInterval(that.initialBubble.bubbleAnimations[i].intervalIds[i])
+					clearInterval(that.initialBubble.bubbleAnimations[i].intervalIds[i]);
+					clearInterval(that.collisionInterval);
+					that.player.lives--;
+					console.log(that.player.lives);
 				}
 			}
 		};
