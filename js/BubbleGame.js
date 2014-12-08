@@ -28,48 +28,7 @@ function BubbleGame(){
 		}
 	}
 	this.collisionCheck=function (argument){
-		console.log(that.collisionInterval);
-		// console.log("bubble"+that.initialBubble.bubbleAnimations[0].positionX);
-		// console.log("bullet"+that.bullet.bulletPosX);
-
-		// if(that.initialBubble.bubbleAnimations[0].positionX<that.bullet.bulletPosX && that.initialBubble.bubbleAnimations[0].positionX>(that.bullet.bulletPosX-30)){
-		// 	that.initialBubble.splitBubble(0);
-		// }else if(that.initialBubble.bubbleAnimations[1].positionX<200 && that.initialBubble.bubbleAnimations[1].positionX>160){
-		// 	that.initialBubble.splitBubble(1);
-		// 	console.log("hello"+that.initialBubble.bubbleAnimations[1]);
-			
-		// }else if(that.initialBubble.bubbleAnimations[2].positionX<200 && that.initialBubble.bubbleAnimations[2].positionX>160){
-		// 	that.initialBubble.splitBubble(2);
-			
-		// }
-
-		// if(that.bullet.fired=="true"){
-		// 	if(that.initialBubble.bubbleAnimations[0].positionX<that.bullet.bulletPosX && that.initialBubble.bubbleAnimations[0].positionX>(that.bullet.bulletPosX-30)){
-		// 		if(that.initialBubble.bubbleAnimations[0].positionY>that.bullet.bulletPosY){
-		// 		console.log('thokki ta halyo');
-		// 		clearInterval(that.collisionInterval);
-		// 		clearInterval(that.initialBubble.bubbleAnimations[0].intervalIds[0]);
-		// 		that.initialBubble.splitBubble(0);
-		// 		that.initialBubble.splitBubble(1);
-		// 		that.initialBubble.splitBubble(2);
-		// 		}
-		// 	}
-			// } else if(that.initialBubble.bubbleAnimations[1].positionX<that.bullet.bulletPosX && that.initialBubble.bubbleAnimations[1].positionX>(that.bullet.bulletPosX-20)){
-			// 	clearInterval(that.collisionInterval);
-			// 	that.initialBubble.splitBubble(1);
-			// 	that.initialBubble.splitBubble(2);
-				
-			// }
-		// }
-		// for (var i = 0; i < that.initialBubble.bubbles.length; i++) {
-		// 	//collision with bullet
-		// 	// && that.initialBubble.bubbleAnimations[i].positionY>that.bullet.bulletPosY
-		// 	if(that.bullet.fired=="true"){
-		// 		if(that.initialBubble.bubbleAnimations[i].positionX==that.bullet.bulletPosX){
-		// 			console.log('collided');
-		// 			that.initialBubble.splitBubble(i);
-		// 		}	
-		// 	}
+		console.log("checking collision");
 		// collision with bullet
 		for (var i = 0; i < that.initialBubble.bubbles.length; i++) {
 			if(that.bullet.fired=="true"){
@@ -77,10 +36,11 @@ function BubbleGame(){
 					if(that.initialBubble.bubbleAnimations[i].positionY>that.bullet.bulletPosY){
 					console.log('thokki ta halyo');
 					clearInterval(that.collisionInterval);
+					setInterval(that.collisionCheck, 120)
 					clearInterval(that.initialBubble.bubbleAnimations[i].intervalIds[i]);
+					that.initialBubble.bubbleAnimations[i].intervalIds.splice(i, 1);
 					that.initialBubble.splitBubble(i);
 					break;
-					// that.initialBubble.splitBubble(i);
 					}
 				}
 			}

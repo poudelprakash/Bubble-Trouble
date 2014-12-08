@@ -24,9 +24,10 @@
 }
 .bullet{
 	position: absolute;
-	background-color:red;
+	background:url(../images/bullet.png);
 }
 #player{
 	background-color: black;
 	position: absolute;
+	z-index: 1;
 }

@@ -1,10 +1,11 @@
 function Player(game){
 	this.gameWindow=game.gameWindow;
 	this.player;
-	this.playerPosX=330;
+	this.playerPosX=180;
 	this.playerHeight=50;
 	this.playerWidth=20;
-	that=this;
+	this.lives=3;
+	var that=this;
 	this.createPlayer=function(){
 		that.player=document.createElement("div");
 		that.player.id="player";
@@ -18,9 +19,11 @@ function Player(game){
 		if(that.playerPosX<760){
 			that.playerPosX+=10;
 			that.player.style.left=that.playerPosX+"px";
+			// console.log(that.playerPosX);
 		}
 	}
 	this.moveLeft=function(){
+		// console.log(that.playerPosX);
 		if(that.playerPosX>0){
 			that.playerPosX-=10;
 			that.player.style.left=that.playerPosX+"px";
