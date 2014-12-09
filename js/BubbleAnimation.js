@@ -13,7 +13,6 @@ function BubbleAnimation(bubble){
 	this.velocityY=-6;//y velocity that makes ball bounce some distance on creation
 	this.gravity=0.5;//gravity to pull bouncing ball down
 	this.intervalId;
-	this.intervalIds=[];
 	var that=this;
 	this.animate=function (element,properties,frequency){
 		that.bubble=element;
@@ -27,7 +26,6 @@ function BubbleAnimation(bubble){
 		that.topPos = 400-that.oBubble.bubbleWidth;//generating top position by substracting diameter
 		that.rightEnd = 780-that.oBubble.bubbleWidth;//generating Rightmost position by substracting diameter
 		that.intervalId=setInterval(that.update, that.frequency);
-		that.intervalIds.push(that.intervalId);
 	}
 	this.update=function(){
 		if(that.positionY==that.topPos){

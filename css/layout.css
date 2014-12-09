@@ -27,7 +27,7 @@
 	background:url(../images/bullet.png);
 }
 #player{
-	background-color: black;
+	background:url(../images/player.png);
 	position: absolute;
 	z-index: 1;
 }

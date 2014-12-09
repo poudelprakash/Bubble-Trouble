@@ -12,6 +12,7 @@ function Bubble(game){
 	this.positionX;
 	this.bounce;//animation class for bubble
 	this.velocityX=4;//x velocity to determine width of bounce
+	this.pop = new Audio("sounds/pop.mp3"); // buffers automatically when created
 	this.index;
 	var that=this;
 	this.createBubble=function(properties){
@@ -39,6 +40,7 @@ function Bubble(game){
 	}
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
+		console.log(that.bounce);
 		that.bubbleAnimations.push(that.bounce);
 		if(that.bubbleWidth==30){
 			that.bounce.animate(that.element,{velocity:-18,top:that.topPos,left:that.positionX,velocityX:that.velocityX},42);
@@ -50,30 +52,46 @@ function Bubble(game){
 	}
 	this.splitBubble=function (index){
 		that.index=index;
-		var pop = new Audio("sounds/pop.mp3"); // buffers automatically when created
-		console.log(that.bubbles[index].clientHeight);
+		// console.log(that.bubbles[index].clientHeight);
+		// console.log(index);
+		// console.log(that.bubbleAnimations);
 		if(that.bubbles[index].clientHeight==30){
-			pop.play();
+			// that.pop.play();
+			
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionY,left:that.bubbleAnimations[index].positionX,width:"20px",velocityX:-1});
+			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionY,left:that.bubbleAnimations[index].positionX,width:"20px"});	
 			that.destroyBubble(that.bubbles[index]);
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionX,left:that.bubbleAnimations[index].positionX,width:"20px",velocityX:-1});
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionX,left:that.bubbleAnimations[index].positionX,width:"20px",velocityX:1});
 		}
 		else if(that.bubbles[index].clientHeight==20){
-			that.destroyBubble(that.bubbles[index]);
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"10px",velocityX:-1});
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[0].positionX,left:that.bubbleAnimations[0].positionX,width:"10px",velocityX:1});
+			that.pop.play();
 			
+			// that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionY,left:that.bubbleAnimations[index].positionX,width:"10px",velocityX:-1});
+			// that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[index].positionY,left:that.bubbleAnimations[index].positionX,width:"10px"});
+			that.destroyBubble(that.bubbles[index]);
 		}else if(that.bubbles[index].clientHeight==10){
 			that.destroyBubble(that.bubbles[index]);
 		}		
 	}
 	this.destroyBubble=function(element){
+		console.log(that.bubbleAnimations);
 		//clearing the resource
-		clearInterval(that.bounce.intervalId[that.index]);
-		that.bounce.intervalIds.splice(that.index,1);
-		that.bubbles.splice(that.index,1)
+		// for (var i = 0; i <= that.index; i++) {
+		// 	clearInterval(that.bubbleAnimations[i].intervalId);
+		// 	console.log(that.index);
+		// };
+		// clearInterval(that.bubbleAnimations[that.index].intervalId);
+		// console.log(that.bubbleAnimations[that.index].intervalId);
+		clearInterval(that.bubbleAnimations[that.index].intervalId);
+		// console.log(that.bubbles);
+		
+
+		// console.log(that.bubbles);
+		// console.log(that.bubbles.indexOf(element));
+		that.bubbles.splice(that.index,1);
+
 		that.gameWindow.removeChild(element);//removes whichever element is passed for destruction
-		that.collisionInterval=setInterval(that.collisionCheck,120);
-		// that.bounce.intervalId=setInterval(that.bounce.update, that.bounce.frequency);
+		game.collisionInterval=setInterval(that.collisionCheck,120);
+		that.bubbleAnimations[that.index].intervalId=setInterval(that.bounce.update, that.bubbleAnimations[that.index].frequency);
+		that.bubbleAnimations.splice(that.index,1);
 	}
 }

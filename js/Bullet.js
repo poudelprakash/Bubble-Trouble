@@ -6,25 +6,28 @@ function Bullet(game){
 	this.bulletUpdateInterval;
 	this.bulletWidth=8;
 	this.bullet;
+	this.sndBullet = new Audio("sounds/bullet.mp3"); // buffers automatically when created
 	this.fired="false";
+	// this.a;
 	var that=this;
 	this.fireBullet=function(x){
 		if(that.fired=="false"){
 			that.bulletPosX=game.player.playerPosX+game.player.playerWidth/2-4;//this fixes where the bullet should emerge from
 			that.bullet=document.createElement("div");
 			that.bullet.className="bullet";
-			that.bullet.style.height=400+"px";
+			that.bullet.style.height=400+"px";//bullet that covers the height of game-screen
 			that.bullet.style.width=that.bulletWidth+"px";
 			that.bullet.style.left=that.bulletPosX+"px";
 			that.bullet.style.top=that.bulletPosY+"px";
 			that.gameWindow.appendChild(that.bullet);
 			that.bulletUpdateInterval=setInterval(that.updateBullet, 5);
-			var pop = new Audio("sounds/bullet.mp3"); // buffers automatically when created
-			pop.play();
+			that.sndBullet.play();
+			// that.updateBullet();
 		}	
 	}
 	this.updateBullet=function(){
 			// console.log(that.bulletPosY);
+			// that.a=requestAnimationFrame(that.updateBullet);
 		if(that.bulletPosY!=0){
 			that.fired="true";
 			that.bulletPosY-=2;
@@ -37,6 +40,7 @@ function Bullet(game){
 		//clearing bullet resources
 		that.fired="false";
 		that.bulletPosY=that.bulletHeight;
+		// cancelAnimationFrame(that.a);
 		clearInterval(that.bulletUpdateInterval);
 		that.gameWindow.removeChild(that.bullet);
 	}
