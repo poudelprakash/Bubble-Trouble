@@ -6,16 +6,16 @@ function BubbleGame(){
 	var livesDisplay = document.getElementById("lives");
 	this.player;
 	this.bullet;
+	var bubbleDiameter=30;
 	
 	this.bubbles=[];
 
 	this.score=0;
 	this.collisionInterval;
-	this.punch = new Audio("sounds/punch.mp3"); // sound when bubble hits player
+	var punchSnd = new Audio("sounds/punch.mp3"); // sound when bubble hits player
 	var that=this;
 	this.startScreen=function(){
 		document.getElementById("game-start").style.display="block";
-
 	}
 	this.start=function(){
 		document.getElementById("game-start").style.display="none";
@@ -25,16 +25,13 @@ function BubbleGame(){
 		that.player.createPlayer();//creates new player at the start
 		
 		that.bullet=new Bullet(that);//instance of bullet
-		
-		var bubble = new Bubble(that);//instance of bubble
-		bubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"40px"});
-		
-		that.bubbles.push(bubble);//pushing bubble to array
+
+		that.bubbleGenerator();//generates bubble for each level
 
 		that.collisionInterval=setInterval(that.collisionCheck,50);
 		document.addEventListener('keydown', that.onkeydown, false);
 	}
-	that.onkeydown=function(event){
+	this.onkeydown=function(event){
 		// keyboard keys handler
 		if(event.keyCode == 32){//for space key
 			that.bullet.fireBullet();
@@ -46,10 +43,17 @@ function BubbleGame(){
 			that.player.moveRight();
 		}
 	}
+	this.bubbleGenerator=function(){
+		var bubble = new Bubble(that);//instance of bubble
+		bubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:bubbleDiameter+"px"});
+	
+		that.bubbles.push(bubble);//pushing bubble to array
+	}
 	this.collisionCheck=function (argument){
-		scoreboardDisplay.innerHTML=that.score;
 		//function to check collision with bullet and player
-		
+
+		scoreboardDisplay.innerHTML=that.score;//updates score
+
 		for (var i = 0; i < that.bubbles.length; i++) {
 			console.log('checking collsion');
 			var currentBubble = that.bubbles[i];
@@ -82,7 +86,7 @@ function BubbleGame(){
 			// collision with player
 			if(currentBounce.positionX>(that.player.playerPosX-parseInt(currentBubble.bubbleWidth)) && currentBounce.positionX<(that.player.playerPosX+that.player.playerWidth)){
 				if(currentBounce.positionY>(400-(that.player.playerHeight+parseInt(currentBubble.bubbleWidth)))){
-					that.punch.play();
+					punchSnd.play();
 					
 					that.reset();
 					that.player.lives--;
@@ -90,6 +94,11 @@ function BubbleGame(){
 				}
 			}
 		};
+		//level updater
+		if(that.bubbles.length==0){
+			bubbleDiameter+=10;
+			that.bubbleGenerator();
+		}
 	}
 	//reset function
 	this.reset=function(){
@@ -103,10 +112,8 @@ function BubbleGame(){
 
 		if(that.player.lives>1){
 		that.bubbles=[];
-		var bubble = new Bubble(that);//instance of bubble
-		bubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"40px"});
 		
-		that.bubbles.push(bubble);//pushing bubble to array
+		that.bubbleGenerator;
 
 		}else{
 			that.gameOver();
@@ -114,6 +121,7 @@ function BubbleGame(){
 	}
 	//game over function
 	this.gameOver=function(){
+		that.player.lives=3;
 		clearInterval(that.collisionInterval);
 		document.getElementById("game-over").style.display="block";
 		console.log('game over');
