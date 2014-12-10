@@ -2,8 +2,7 @@
 function Bubble(game){
 	this.game=game;
 	this.gameWindow=game.gameWindow;
-	this.bubbles=[];
-	this.bubbleAnimations=[];
+	
 	this.element;
 	this.properties;
 	this.bubbleClass;
@@ -12,7 +11,7 @@ function Bubble(game){
 	this.positionX;
 	this.bounce;//animation class for bubble
 	this.velocityX=4;//x velocity to determine width of bounce
-	this.pop = new Audio("sounds/pop.mp3"); // buffers automatically when created
+	this.pop = new Audio("sounds/pop.mp3"); //pop sound for bubble splits
 	this.index;
 	var that=this;
 	this.createBubble=function(properties){
@@ -34,42 +33,51 @@ function Bubble(game){
 		that.element.style.top=that.positionY+"px";
 		that.element.style.left=that.positionX+"px";
 		that.gameWindow.appendChild(that.element);//creates bubble
-		that.bubbles.push(that);//pushing bubble to array
-		// console.log(that.bubbles);
-		that.animateBubble();//start animating as soon as ball is created
+		that.animateBubble();//start animating as soon as ball is created		
 	}
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
-		that.bubbleAnimations.push(that.bounce);
+		
 		// console.log(that.bounce);
 		if(that.bubbleWidth==40){
-			that.bounce.animate(that.element,{velocity:-14,top:that.positionY,left:that.positionX,velocityX:that.velocityX},60);
+			that.bounce.animate(that.element,{velocity:-14,top:that.positionY,left:that.positionX,velocityX:that.velocityX},50);
 		}else if(that.bubbleWidth==30){
-			that.bounce.animate(that.element,{velocity:-12,top:that.positionY,left:that.positionX,velocityX:that.velocityX},55);
+			that.bounce.animate(that.element,{velocity:-12,top:that.positionY,left:that.positionX,velocityX:that.velocityX},45);
 		}else if(that.bubbleWidth==20){
-			that.bounce.animate(that.element,{velocity:-8,top:that.positionY,left:that.positionX,velocityX:that.velocityX},50);
+			that.bounce.animate(that.element,{velocity:-8,top:that.positionY,left:that.positionX,velocityX:that.velocityX},30);
 		}
 	}
-	this.splitBubble=function (index){
-		that.index=index;
-		if(that.bubbles[that.index].bubbleWidth==40){
-			game.score+=that.bubbles[that.index].bubbleWidth*2;
-			that.destroyBubble(that.bubbles[that.index]);		
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[that.index].positionY,left:that.bubbleAnimations[that.index].positionX,width:"30px",velocityX:-1});
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[that.index].positionY,left:that.bubbleAnimations[that.index].positionX,width:"30px"});		
+	this.splitBubble=function (){
+		
+		if(that.bubbleWidth==40){
+			var bubble1 = new Bubble(that.game);
+			var bubble2 = new Bubble(that.game);
+
+			game.score+=that.bubbleWidth*2;
+
+			bubble1.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"30px",velocityX:-1});
+			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"30px"});		
+
+			return [bubble1, bubble2];
 		}
-		else if(that.bubbles[that.index].bubbleWidth==30){
-			game.score+=that.bubbles[that.index].bubbleWidth*2;
-			that.destroyBubble(that.bubbles[that.index]);
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[that.index].positionY,left:that.bubbleAnimations[that.index].positionX,width:"20px",velocityX:-1});
-			that.createBubble({bubbleClass:that.bubbleClass,top:that.bubbleAnimations[that.index].positionY,left:that.bubbleAnimations[that.index].positionX,width:"20px"});
-		}else if(that.bubbles[that.index].bubbleWidth==20){
-			game.score+=that.bubbles[that.index].bubbleWidth*2;
-			console.log(that.bubbles);
-			that.destroyBubble(that.bubbles[that.index]);
+		else if(that.bubbleWidth==30){
+			var bubble1 = new Bubble(that.game);
+			var bubble2 = new Bubble(that.game);
+
+			game.score+=that.bubbleWidth*2;
+
+			bubble1.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"20px",velocityX:-1});
+			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"20px"});
+
+			return [bubble1, bubble2];
+		}else if(that.bubbleWidth==20){
+			game.score+=that.bubbleWidth*2;
+
+			return [];
 		}		
 	}
-	this.destroyBubble=function(ballObject){
-		that.gameWindow.removeChild(ballObject.element);//removes whichever element is passed for destruction
+	this.destroyBubble=function(){
+		that.gameWindow.removeChild(that.element);//removes smallest bubble and big bubble after collsion
+		// console.log("destroying", that.element);
 	}
-}
+} 
