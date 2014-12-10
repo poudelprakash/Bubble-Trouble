@@ -12,7 +12,7 @@ function Bullet(game){
 	var that=this;
 	this.fireBullet=function(x){
 		if(that.fired=="false"){
-			that.bulletPosX=game.player.playerPosX+game.player.playerWidth/2-4;//this fixes where the bullet should emerge from
+			that.bulletPosX=game.player.playerPosX+game.player.playerWidth/2-(this.bulletWidth/2);//this fixes where the bullet should emerge from
 			that.bullet=document.createElement("div");
 			that.bullet.className="bullet";
 			that.bullet.style.height=400+"px";//bullet that covers the height of game-screen

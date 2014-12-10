@@ -21,7 +21,7 @@ function BubbleAnimation(bubble){
 		that.positionY=that.properties.top;
 		that.positionX=that.properties.left;
 		that.velocityX=that.properties.velocityX;//altering direction for splits
-		// that.velocityY=that.properties.velocityY;//get velocity Y for higher jump in splits
+		// // that.velocityY=that.properties.velocityY;//get velocity Y for higher jump in splits
 		that.frequency=frequency;
 		that.topPos = 400-that.oBubble.bubbleWidth;//generating top position by substracting diameter
 		that.rightEnd = 780-that.oBubble.bubbleWidth;//generating Rightmost position by substracting diameter
