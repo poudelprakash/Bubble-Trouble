@@ -13,8 +13,14 @@ function BubbleGame(){
 	this.collisionInterval;
 	this.punch = new Audio("sounds/punch.mp3"); // sound when bubble hits player
 	var that=this;
-	this.init=function(){
-		//initial function of game loop
+	this.startScreen=function(){
+		document.getElementById("game-start").style.display="block";
+
+	}
+	this.start=function(){
+		document.getElementById("game-start").style.display="none";
+		document.getElementById("game-over").style.display="none";
+		//game start function
 		that.player=new Player(that);//instance of player
 		that.player.createPlayer();//creates new player at the start
 		
@@ -45,15 +51,14 @@ function BubbleGame(){
 		//function to check collision with bullet and player
 		
 		for (var i = 0; i < that.bubbles.length; i++) {
+			console.log('checking collsion');
 			var currentBubble = that.bubbles[i];
 			var currentBounce = currentBubble.bounce;
 
 			if(that.bullet.fired==true){
-				// console.log(currentBounce.positionX , that.bullet.bulletPosX+that.bullet.bulletWidth-that.bubbles[i].bubbleWidth);
 				if(currentBounce.positionX>(that.bullet.bulletPosX+that.bullet.bulletWidth-that.bubbles[i].bubbleWidth) && currentBounce.positionX<(that.bullet.bulletPosX+that.bullet.bulletWidth)){
 						if((currentBounce.positionY+that.bubbles[i].bubbleWidth)>that.bullet.bulletPosY){
 							console.log('bubble collided')
-
 
 							clearInterval(currentBounce.intervalId);//clear bubble update interval
 							var newBubbles = currentBubble.splitBubble(i);//split bubble till end
@@ -78,35 +83,39 @@ function BubbleGame(){
 			if(currentBounce.positionX>(that.player.playerPosX-parseInt(currentBubble.bubbleWidth)) && currentBounce.positionX<(that.player.playerPosX+that.player.playerWidth)){
 				if(currentBounce.positionY>(400-(that.player.playerHeight+parseInt(currentBubble.bubbleWidth)))){
 					that.punch.play();
-					clearInterval(currentBounce.intervalId);
-					clearInterval(that.collisionInterval);
+					
 					that.reset();
-					break;
+					that.player.lives--;
+					// break;
 				}
 			}
 		};
 	}
 	//reset function
-	this.reset=function(){	
-		// if(that.player.lives>1){
-		// 	that.player.lives--;
-		// 	livesDisplay.innerHTML=that.player.lives;
-		// 	for (var i = 0; i < that.bubbles.length; i++) {
-		// 		//destroy all bubbles in screen
-		// 		var currentBubble = that.bubbles[i];
-		// 		currentBubble.destroyBubble()
-		// 	};
-		// 	var bubble = new Bubble(that);//instance of bubble
-		// 	bubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"30px"});
-		// 	that.collisionInterval=setInterval(that.collisionCheck,120);	
-		// }else{
-		// 	that.player.lives--;
-		// 	livesDisplay.innerHTML=that.player.lives;
-		// 	that.gameOver();
-		// }
+	this.reset=function(){
+		livesDisplay.innerHTML=that.player.lives-1;//display number of lives
+
+		for (var i = 0; i < that.bubbles.length; i++) {
+				//destroy all bubbles in screen
+				var currentBubble = that.bubbles[i];
+				currentBubble.destroyBubble();
+			};	
+
+		if(that.player.lives>1){
+		that.bubbles=[];
+		var bubble = new Bubble(that);//instance of bubble
+		bubble.createBubble({bubbleClass:"bubble-red",top:"60px",left:"60px",width:"40px"});
+		
+		that.bubbles.push(bubble);//pushing bubble to array
+
+		}else{
+			that.gameOver();
+		}
 	}
 	//game over function
 	this.gameOver=function(){
+		clearInterval(that.collisionInterval);
+		document.getElementById("game-over").style.display="block";
 		console.log('game over');
 		that.player.removePlayer();
 	}
@@ -114,4 +123,4 @@ function BubbleGame(){
 }
 //start of game
 var game=new BubbleGame();
-game.init();
+game.startScreen();

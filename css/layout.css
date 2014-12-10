@@ -65,10 +65,12 @@
 #game-over #game-over-text{
 	z-index: 12;
 	font-size: 98px;
+	color: red;
 }
 #game-over #play-again{
 	z-index: 12;
 	font-size: 24px;
 	margin-top: 26px;
 	display: block;
+	color: #fff;
 }

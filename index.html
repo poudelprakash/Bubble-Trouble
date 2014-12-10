@@ -9,18 +9,19 @@
 <div id="game-window">
 <div id="game-start">
 	<img src="images/bt-logo.gif">
-	<span id="start">Start</span>
+	<span id="start" onclick="game.start()">Start</span>
 	<span id="start">Instructions</span>
 	<span id="start">High Scores</span>
 </div>
 <div id="game-over">
 	<span id="game-over-text">Game Over</span>
-	<span id="play-again">Play Again</span>
+	<span id="play-again" onclick="game.start()" >Play Again</span>
 </div>
 </div>
 <div id="status-bar">
 	Score : <span id="score">123</span><br>
 	Lives: <span id="lives">3</span>
+	<span id="reset" onclick="game.reset()" >Reset</span>
 </div>
 <script type="text/javascript" src="js/BubbleAnimation.js"></script>
 <script type="text/javascript" src="js/Bubble.js"></script>

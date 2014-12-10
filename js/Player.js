@@ -26,7 +26,6 @@ function Player(game){
 	}
 	this.moveLeft=function(){
 		// moves player left
-		// console.log(that.playerPosX);
 		if(that.playerPosX>0){
 			that.playerPosX-=10;
 			that.player.style.left=that.playerPosX+"px";

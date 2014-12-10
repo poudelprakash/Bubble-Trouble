@@ -38,8 +38,11 @@ function Bubble(game){
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
 		
-		// console.log(that.bounce);
-		if(that.bubbleWidth==40){
+		if(that.bubbleWidth==60){
+			that.bounce.animate(that.element,{velocity:-18,top:that.positionY,left:that.positionX,velocityX:that.velocityX},65);
+		}else if(that.bubbleWidth==50){
+			that.bounce.animate(that.element,{velocity:-16,top:that.positionY,left:that.positionX,velocityX:that.velocityX},60);
+		}else if(that.bubbleWidth==40){
 			that.bounce.animate(that.element,{velocity:-14,top:that.positionY,left:that.positionX,velocityX:that.velocityX},50);
 		}else if(that.bubbleWidth==30){
 			that.bounce.animate(that.element,{velocity:-12,top:that.positionY,left:that.positionX,velocityX:that.velocityX},45);
@@ -49,7 +52,27 @@ function Bubble(game){
 	}
 	this.splitBubble=function (){
 		
-		if(that.bubbleWidth==40){
+		if(that.bubbleWidth==60){
+			var bubble1 = new Bubble(that.game);
+			var bubble2 = new Bubble(that.game);
+
+			game.score+=that.bubbleWidth*2;
+
+			bubble1.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"50px",velocityX:-1});
+			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"50px"});
+
+			return [bubble1, bubble2];
+		}else if(that.bubbleWidth==50){
+			var bubble1 = new Bubble(that.game);
+			var bubble2 = new Bubble(that.game);
+
+			game.score+=that.bubbleWidth*2;
+
+			bubble1.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"40px",velocityX:-1});
+			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"40px"});
+
+			return [bubble1, bubble2];
+		}else if(that.bubbleWidth==40){
 			var bubble1 = new Bubble(that.game);
 			var bubble2 = new Bubble(that.game);
 
@@ -71,6 +94,7 @@ function Bubble(game){
 
 			return [bubble1, bubble2];
 		}else if(that.bubbleWidth==20){
+			
 			game.score+=that.bubbleWidth*2;
 
 			return [];
