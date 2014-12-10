@@ -2,20 +2,20 @@
 #game-window{
 	width: 780px;
 	height: 400px;
-	background:url(../images/bg1.jpg);
+	background:url("../images/bg1.jpg");
 	position: relative;
 	overflow: hidden;
 }
 /*player style*/
 #player{
-	background:url(../images/player.png);
+	background:url("../images/player.png");
 	position: absolute;
 	z-index: 1;
 }
 /*bullet class*/
 .bullet{
 	position: absolute;
-	background:url(../images/bullet.png);
+	background:url("../images/bullet.png");
 	height: 400px;
 	top:0px;
 	left: 180px;
@@ -45,13 +45,17 @@
 	height: 400px;
 	text-align: center;	
 	font-size: 30px;
-	background-color:rgba(0,255,10,0.6);
+	background:url("../images/start-screen-bg.jpg");
 	z-index: 10;
-	display: none;
 }
-#game-start #start{
-	display: block;
-	color: #fff;
+#game-start .menu-item{
+	color: white;
+	background-color: #09648c;
+	position: absolute;
+	margin: 10px;
+}
+#game-start .menu-item:hover{
+	border:4px solid #fff;
 }
 /*game over styles*/
 #game-over{
@@ -68,12 +72,17 @@
 	color: red;
 }
 #game-over #play-again{
-	z-index: 12;
-	font-size: 24px;
-	margin-top: 26px;
-	display: block;
-	color: #fff;
+	color: white;
+	background-color: #09648c;
+	position: absolute;
+	margin: 10px;
 }
 #game-over #play-again:hover{
-	color: green;
+	border:4px solid #fff;
+}
+/*victory css*/
+#victory{
+	width:780px;
+	height: 400px;
+	background:url("../images/victory-screen.jpg");
 }

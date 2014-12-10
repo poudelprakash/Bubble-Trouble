@@ -18,9 +18,9 @@ function Bubble(game){
 		that.properties=properties;
 		that.bubbleClass=that.properties.bubbleClass;
 		that.positionY=parseInt(that.properties.top);
-		that.bubbleWidth=parseInt(that.properties.width);
+		that.bubbleWidth=parseInt(that.properties.width);//diameter of bubble
 		if(that.properties.velocityX==-1){
-			that.velocityX*=-1;			
+			that.velocityX*=-1;//to send one of the generated bubbles after split into opposite direction			
 		}else{
 			that.velocityX=4;
 		}
@@ -52,12 +52,13 @@ function Bubble(game){
 	}
 	this.splitBubble=function (){
 		
-		if(that.bubbleWidth==60){
+		if(that.bubbleWidth==60){//bubble with diameter 60 is the current largest enemy
 			var bubble1 = new Bubble(that.game);
 			var bubble2 = new Bubble(that.game);
 
 			game.score+=that.bubbleWidth*2;
 
+			// create new bubbles from the position of split
 			bubble1.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"50px",velocityX:-1});
 			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"50px"});
 
@@ -102,6 +103,5 @@ function Bubble(game){
 	}
 	this.destroyBubble=function(){
 		that.gameWindow.removeChild(that.element);//removes smallest bubble and big bubble after collsion
-		// console.log("destroying", that.element);
 	}
 } 
