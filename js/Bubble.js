@@ -35,6 +35,7 @@ function Bubble(game){
 		that.gameWindow.appendChild(that.element);//creates bubble
 		that.animateBubble();//start animating as soon as ball is created		
 	}
+
 	this.animateBubble=function (){
 		that.bounce=new BubbleAnimation(that);
 		
@@ -50,6 +51,7 @@ function Bubble(game){
 			that.bounce.animate(that.element,{velocity:-8,top:that.positionY,left:that.positionX,velocityX:that.velocityX},30);
 		}
 	}
+
 	this.splitBubble=function (){
 		
 		if(that.bubbleWidth==60){//bubble with diameter 60 is the current largest enemy
@@ -101,6 +103,7 @@ function Bubble(game){
 			return [];
 		}		
 	}
+	
 	this.destroyBubble=function(){
 		that.gameWindow.removeChild(that.element);//removes smallest bubble and big bubble after collsion
 	}

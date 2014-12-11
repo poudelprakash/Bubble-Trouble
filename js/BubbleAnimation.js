@@ -26,6 +26,7 @@ function BubbleAnimation(bubble){
 		that.rightEnd = 780-that.oBubble.bubbleWidth;//generating Rightmost position by substracting diameter
 		that.intervalId=setInterval(that.update, that.frequency);
 	}
+	
 	this.update=function(){
 		if(that.positionY==that.topPos){
 			//checks when bubble reaches bottom and then bubble bounces(automates bounce)
