@@ -34,6 +34,7 @@ function BubbleGame(){
 	this.collisionInterval;
 
 	var punchSnd = new Audio("sounds/punch.mp3"); // sound when bubble hits player
+	var startScreenSnd=new Audio("sounds/castle.mp3");//start screen sound
 	var that=this;
 
 	this.startScreen=function(){
@@ -66,6 +67,7 @@ function BubbleGame(){
 		spanHighscores.innerHTML="High Scores";
 		startDisplay.appendChild(spanHighscores);
 
+		startScreenSnd.play();
 	}
 	
 	this.statsDisplay=function(){
@@ -114,6 +116,7 @@ function BubbleGame(){
 	this.start=function(){
 		if(startDisplay.parentNode==that.gameWindow){
 			that.gameWindow.removeChild(startDisplay);
+			startScreenSnd.pause();
 		}
 		if(gameOverDisplay!=null){
 			gameOverDisplay.style.display="none";
@@ -186,7 +189,7 @@ function BubbleGame(){
 					}
 			}
 			// collision with player
-			else if(currentBounce.positionX>(that.player.playerPosX-parseInt(currentBubble.bubbleWidth)) && currentBounce.positionX<(that.player.playerPosX+that.player.playerWidth)){
+			if(currentBounce.positionX>(that.player.playerPosX-parseInt(currentBubble.bubbleWidth)) && currentBounce.positionX<(that.player.playerPosX+that.player.playerWidth)){
 				if(currentBounce.positionY>(400-(that.player.playerHeight+parseInt(currentBubble.bubbleWidth)))){
 					punchSnd.play();
 					that.reset();

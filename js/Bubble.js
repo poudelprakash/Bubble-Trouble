@@ -11,7 +11,7 @@ function Bubble(game){
 	this.positionX;
 	this.bounce;//animation class for bubble
 	this.velocityX=4;//x velocity to determine width of bounce
-	this.pop = new Audio("sounds/pop.mp3"); //pop sound for bubble splits
+	var pop = new Audio("sounds/pop.mp3"); //pop sound for bubble splits
 	this.index;
 	var that=this;
 	this.createBubble=function(properties){
@@ -54,6 +54,9 @@ function Bubble(game){
 
 	this.splitBubble=function (){
 		
+		that.game.bullet.sndBullet.pause();
+		pop.play();
+
 		if(that.bubbleWidth==60){//bubble with diameter 60 is the current largest enemy
 			var bubble1 = new Bubble(that.game);
 			var bubble2 = new Bubble(that.game);
