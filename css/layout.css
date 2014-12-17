@@ -86,3 +86,24 @@
 	height: 400px;
 	background:url("../images/victory-screen.jpg");
 }
+/*score*/
+#score{
+	/*display: none;*/
+	position: absolute;
+	top: 120px;
+	left: 20px;
+	width: 200px;
+	height: 200px;
+	overflow: auto;
+}
+table{
+	position: absolute;
+	top: 0px;
+}
+th,td{
+	background-color: black;
+	color: white;
+	width:100px;
+	height: 40px;
+	text-align: center;
+}

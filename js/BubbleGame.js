@@ -6,7 +6,6 @@ function BubbleGame(){
 	// elements 
 	var startDisplay;//start screen
 	var spanStart;//start button on start screen
-	var spanHighscores;//high scores button in start screen
 	var gameOverDisplay;//Game over Screen
 	var gameOverText;//Game Over Text on Game over screen
 	var spnRestart;//Restart option on Game Over Screen
@@ -17,6 +16,7 @@ function BubbleGame(){
 	var scoreboardDisplay;
 	var livesText;
 	var livesDisplay;// displays the count of lives
+	var high;//scores list table
 
 	//counters and flags
 	var rstflag; //reset flag to check when to update evel
@@ -50,22 +50,11 @@ function BubbleGame(){
 		spanStart.style.width="218px"
 		spanStart.style.position = "absolute";
 		spanStart.style.lineHeight="56px";
-		spanStart.style.bottom="130px";
+		spanStart.style.bottom="110px";
 		spanStart.style.right = '5px';
 		spanStart.innerHTML="Start";
 		spanStart.onclick=that.start;
 		startDisplay.appendChild(spanStart);
-
-		//highscore button
-		spanHighscores=document.createElement("span");
-		spanHighscores.className="menu-item";
-		spanHighscores.style.width="218px"
-		spanHighscores.style.position = "absolute";
-		spanHighscores.style.lineHeight="56px";
-		spanHighscores.style.bottom="60px";
-		spanHighscores.style.right = '5px';
-		spanHighscores.innerHTML="High Scores";
-		startDisplay.appendChild(spanHighscores);
 
 		startScreenSnd.play();
 	}
@@ -111,9 +100,17 @@ function BubbleGame(){
 		scoreboardDisplay.style.marginRight="15px"
 		scoreText.appendChild(scoreboardDisplay);
 
+		//highscores from ajax
+		high=document.createElement("span");
+		high.id="score";
+		that.gameWindow.appendChild(high);
+
 	}
 
 	this.start=function(){
+		if(high!=null){
+			high.style.display="none";
+		}
 		if(startDisplay.parentNode==that.gameWindow){
 			that.gameWindow.removeChild(startDisplay);
 			startScreenSnd.pause();
@@ -254,10 +251,16 @@ function BubbleGame(){
 		spnRestart.onclick=that.start;
 		gameOverDisplay.appendChild(spnRestart);
 
+		
 	}
 
 	//game over function
 	this.gameOver=function(){
+		// using ajax for high score
+		var	a=new Ajax();
+		a.putScore(that.score);
+		setTimeout(a.getHighScore, 400);
+		
 		that.player.lives=3;
 		that.score=0;
 		bubbleDiameter=30;
@@ -266,7 +269,6 @@ function BubbleGame(){
 		that.gameWindow.removeChild(levelText);
 		that.gameWindow.removeChild(livesText);
 		clearInterval(that.collisionInterval);
-		console.log('game over');
 		that.player.removePlayer();
 		that.gameOverScreen();
 		that.bubbles=[];

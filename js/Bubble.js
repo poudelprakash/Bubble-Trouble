@@ -106,6 +106,10 @@ function Bubble(game){
 			return [];
 		}		
 	}
+
+	this.splitAnimation=function(){
+		
+	}
 	
 	this.destroyBubble=function(){
 		that.gameWindow.removeChild(that.element);//removes smallest bubble and big bubble after collsion
