@@ -100,11 +100,6 @@ function BubbleGame(){
 		scoreboardDisplay.style.marginRight="15px"
 		scoreText.appendChild(scoreboardDisplay);
 
-		//highscores from ajax
-		high=document.createElement("span");
-		high.id="score";
-		that.gameWindow.appendChild(high);
-
 	}
 
 	this.start=function(){
@@ -256,10 +251,6 @@ function BubbleGame(){
 
 	//game over function
 	this.gameOver=function(){
-		// using ajax for high score
-		var	a=new Ajax();
-		a.putScore(that.score);
-		setTimeout(a.getHighScore, 400);
 		
 		that.player.lives=3;
 		that.score=0;
