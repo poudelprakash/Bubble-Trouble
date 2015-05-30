@@ -1,7 +1,6 @@
 /*-------------------------------------Animation Class---------------------------------------------*/
 function BubbleAnimation(bubble){
-	this.oBubble=bubble;//old bubble from Bubble class
-	this.bubble;
+	this.$bubble;
 	this.properties;
 	this.duration;
 	this.topPos;//initial top position of bubble
@@ -15,19 +14,21 @@ function BubbleAnimation(bubble){
 	this.intervalId;
 	var that=this;
 	this.animate=function (element,properties,frequency){
-		that.bubble=element;
+		that.$bubble=element;
 		that.properties=properties;
 		that.bubbleVelocity=that.properties.velocity;
 		that.positionY=that.properties.top;
 		that.positionX=that.properties.left;
 		that.velocityX=that.properties.velocityX;//altering direction for splits
 		that.frequency=frequency;
-		that.topPos = 400-that.oBubble.bubbleWidth;//generating top position by substracting diameter
-		that.rightEnd = 780-that.oBubble.bubbleWidth;//generating Rightmost position by substracting diameter
+		that.topPos = bubble.game.monitor.height-bubble.bubbleWidth;//generating top position by substracting diameter
+		that.rightEnd = bubble.game.monitor.width-bubble.bubbleWidth;//generating Rightmost position by substracting diameter
 		that.intervalId=setInterval(that.update, that.frequency);
+		that.update();
 	}
 	
 	this.update=function(){
+
 		if(that.positionY==that.topPos){
 			//checks when bubble reaches bottom and then bubble bounces(automates bounce)
 			that.velocityY = that.bubbleVelocity;
@@ -45,7 +46,9 @@ function BubbleAnimation(bubble){
 	    	//limits ball bouncing within width of game-window
 	        that.velocityX *= -1;
 	    }
-	    that.bubble.style.top =that.positionY+"px";
-	    that.bubble.style.left=that.positionX+"px";
+	    that.$bubble.style.top =that.positionY+"px";
+	    that.$bubble.style.left=that.positionX+"px";
+	    // window.requestAnimationFrame(that.update);
 		}
+		
 }

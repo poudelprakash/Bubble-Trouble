@@ -1,42 +1,52 @@
 function Bullet(game){
-	this.gameWindow=game.gameWindow;
-	this.bulletPosX=180;//initial bullet position on x axis
-	this.bulletHeight=400-game.player.playerHeight;//bullet appears from top of player
-	this.bulletPosY=this.bulletHeight;//temporary bullet height
-	this.bulletUpdateInterval;
-	this.bulletWidth=8;
+	this.gameWindow = game.monitor.gameWindow;
+	this.bulletPosX;//bullet position on x axis
+	this.initialPosY = game.monitor.height - game.player.playerHeight;//bullet appears from top of player
+	this.bulletPosY = this.initialPosY;//temporary bullet height
+	this.bulletWidth = 8;
 	this.bullet;
-	this.sndBullet = new Audio("sounds/bullet.mp3"); // buffers automatically when created
-	this.fired=false;
-	var that=this;
-	this.fireBullet=function(x){
-		if(that.fired==false){
-			that.bulletPosX=game.player.playerPosX+game.player.playerWidth/2-(this.bulletWidth/2);//this fixes where the bullet should emerge from
-			that.bullet=document.createElement("div");
-			that.bullet.className="bullet";
-			that.bullet.style.height=400+"px";//bullet that covers the height of game-screen
-			that.bullet.style.width=that.bulletWidth+"px";
-			that.bullet.style.left=that.bulletPosX+"px";
-			that.bullet.style.top=that.bulletPosY+"px";
-			that.gameWindow.appendChild(that.bullet);
-			that.bulletUpdateInterval=setInterval(that.updateBullet, 5);
-			that.sndBullet.play();
-		}	
+	this.fired = false;
+	this.collided = false;
+	var self = this;
+
+	this.create = function(){
+		self.$bullet = document.createElement('div');
+		self.$bullet.className = 'bullet';
+		self.$bullet.style.height = game.monitor.height+'px';//bullet that covers the height of game-screen
+		self.$bullet.style.width = self.bulletWidth+'px';
+		self.$bullet.style.left = self.bulletPosX+'px';
+		self.$bullet.style.top = game.monitor.height+'px';
+		self.gameWindow.appendChild(self.$bullet);
 	}
-	this.updateBullet=function(){
-		if(that.bulletPosY!=0){
-			that.fired=true;
-			that.bulletPosY-=2;
-			that.bullet.style.top=that.bulletPosY+"px";
-		}else if(that.bulletPosY==0){
-			that.destroyBullet();
+
+	this.fire = function(){
+		if(!self.fired){
+			game.sound.bullet.play();
+			self.bulletPosX = game.player.playerPosX + game.player.playerWidth/2- self.bulletWidth/2;//this fixes where the bullet should emerge from
+			self.$bullet.style.left=self.bulletPosX + 'px';
+			self.ascend();
 		}
 	}
+
+	this.ascend = function(){
+		if (self.bulletPosY == 0 || self.collided){
+			self.reset();
+			return;
+		}
+		self.fired = true;
+		self.bulletPosY -= 5;
+		self.$bullet.style.top= self.bulletPosY + 'px';
+		window.requestAnimationFrame(self.ascend);
+	}
+
+	this.reset = function(){
+		self.fired = false;
+		self.collided = false;
+		self.bulletPosY = game.monitor.height;
+		self.$bullet.style.top= self.bulletPosY + 'px';
+	}
+
 	this.destroyBullet=function(){
-		//clearing bullet resources
-		that.fired=false;
-		that.bulletPosY=that.bulletHeight;
-		clearInterval(that.bulletUpdateInterval);
-		that.gameWindow.removeChild(that.bullet);
+		self.gameWindow.removeChild(self.bullet);
 	}
 }

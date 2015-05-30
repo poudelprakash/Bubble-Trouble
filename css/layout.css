@@ -1,7 +1,5 @@
 /*main game Window*/
 #game-window{
-	width: 780px;
-	height: 400px;
 	background:url("../images/bg1.jpg");
 	position: relative;
 	overflow: hidden;
@@ -16,10 +14,6 @@
 .bullet{
 	position: absolute;
 	background:url("../images/bullet.png");
-	height: 400px;
-	top:0px;
-	left: 180px;
-	width: 8px;
 }
 /*enemy bubbles*/
 .bubble-red{
@@ -29,8 +23,6 @@
 .bubble-green{
 	background-color: green;
 	position: absolute;
-	/*display: none;*/
-	/*top: 360px;*/
 }
 .bubble-yellow{
 	background-color: yellow;

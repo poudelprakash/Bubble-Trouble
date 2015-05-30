@@ -126,7 +126,7 @@ function BubbleGame(){
 		document.addEventListener('keydown', that.onkeydown, false);
 	}
 
-	//event hendler
+	//event handler
 	this.onkeydown=function(event){
 		// keyboard keys handler
 		if(event.keyCode == 32){//for space key
@@ -162,7 +162,7 @@ function BubbleGame(){
 				if(currentBounce.positionX>(that.bullet.bulletPosX+that.bullet.bulletWidth-that.bubbles[i].bubbleWidth) && currentBounce.positionX<(that.bullet.bulletPosX+that.bullet.bulletWidth)){
 						if((currentBounce.positionY+that.bubbles[i].bubbleWidth)>that.bullet.bulletPosY){
 
-							clearInterval(currentBounce.intervalId);//clear bubble update interval
+							window.cancelRequestAnimationFrame(currentBounce.intervalId);//clear bubble update interval
 							var newBubbles = currentBubble.splitBubble(i);//split bubble till end
 
 							currentBubble.destroyBubble();
