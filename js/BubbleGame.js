@@ -175,9 +175,7 @@ function BubbleGame(){
 							that.bubbles.splice(i, 1);//remove bubble from array
 							that.bullet.destroyBullet();//clears bullet update interval and removes bullet
 							
-							if (newBubbles.length == 0) {
-								
-							} else {
+							if (newBubbles.length !== 0) {
 								that.bubbles.push(newBubbles[0]);
 								that.bubbles.push(newBubbles[1]);
 							}
@@ -249,9 +247,7 @@ function BubbleGame(){
 		spnRestart.style.left="280px";
 		spnRestart.style.top="160px";
 		spnRestart.onclick=that.start;
-		gameOverDisplay.appendChild(spnRestart);
-
-		
+		gameOverDisplay.appendChild(spnRestart);		
 	}
 
 	//game over function

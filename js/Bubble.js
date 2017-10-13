@@ -88,8 +88,7 @@ function Bubble(game){
 			bubble2.createBubble({bubbleClass:that.bubbleClass,top:that.bounce.positionY,left:that.bounce.positionX,width:"30px"});		
 
 			return [bubble1, bubble2];
-		}
-		else if(that.bubbleWidth==30){
+		}else if(that.bubbleWidth==30){
 			var bubble1 = new Bubble(that.game);
 			var bubble2 = new Bubble(that.game);
 
